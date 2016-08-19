@@ -1,28 +1,33 @@
-window.onload = function() {
-  const context = new (window.AudioContext || window.webkitAudioContext)();
-  const osc = context.createOscillator();
-  const vol = context.createGain();
-  const volControl = document.getElementById("volume");
+const context = new(window.AudioContext || window.webkitAudioContext)();
+const volControl = document.getElementById("volume");
+const panControl = document.getElementById("panner");
+const lfo = context.createOscillator();
+const freqGain = context.createGain();
+const osc = context.createOscillator();
+const vol = context.createGain();
+const panner = context.createStereoPanner();
 
-  const freqGain = context.createGain();
-  const lfo = context.createOscillator();
-
+volControl.addEventListener('input', () => {
   vol.gain.value = volControl.value;
-  vol.connect(context.destination);
+});
 
-  osc.frequency.value = 440;
-  osc.connect(vol);
+panControl.addEventListener('input', () => {
+  panner.pan.value = panControl.value;
+});
 
-  freqGain.gain.value = 100;
-  freqGain.connect(osc.frequency);
+lfo.frequency.value = 1;
+lfo.connect(freqGain);
 
-  lfo.frequency.value = 1;
-  lfo.connect(freqGain);
+freqGain.gain.value = 100;
+freqGain.connect(osc.frequency);
 
-  volControl.addEventListener('input', () => {
-    vol.gain.value = volControl.value;
-  });
+osc.frequency.value = 440;
+osc.connect(vol);
 
-  osc.start();
-  lfo.start();
-};
+vol.gain.value = volControl.value;
+vol.connect(panner);
+
+panner.connect(context.destination);
+
+lfo.start();
+osc.start();
