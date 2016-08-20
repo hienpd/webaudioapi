@@ -11,16 +11,16 @@ const panner = context.createStereoPanner();
 
 const waveControl = $('input:radio').on('click', (event) => {
   if (event.currentTarget.id === 'sine') {
-    osc.type = 'sine';
+    lfo.type = 'sine';
   }
   else if (event.currentTarget.id === 'square') {
-    osc.type = 'square';
+    lfo.type = 'square';
   }
   else if (event.currentTarget.id === 'triangle') {
-    osc.type = 'triangle';
+    lfo.type = 'triangle';
   }
   else if (event.currentTarget.id === 'sawtooth') {
-    osc.type = 'sawtooth';
+    lfo.type = 'sawtooth';
   }
 });
 
