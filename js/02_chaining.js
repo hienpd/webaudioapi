@@ -2,7 +2,7 @@ const context = new(window.AudioContext || window.webkitAudioContext)();
 const volControl = document.getElementById("volume");
 const panControl = document.getElementById("panner");
 const lfoControl = document.getElementById("lfo");
-
+const freqGainControl = document.getElementById("freq-gain");
 const lfo = context.createOscillator();
 const freqGain = context.createGain();
 const osc = context.createOscillator();
@@ -24,8 +24,6 @@ const waveControl = $('input:radio').on('click', (event) => {
   }
 });
 
-
-
 volControl.addEventListener('input', () => {
   vol.gain.value = volControl.value;
 });
@@ -40,7 +38,11 @@ lfoControl.addEventListener('input', () => {
 
 lfo.connect(freqGain);
 
-freqGain.gain.value = 100;
+freqGainControl.addEventListener('input', () => {
+  freqGain.gain.value = freqGainControl.value;
+});
+
+// freqGain.gain.value = 100;
 freqGain.connect(osc.frequency);
 
 osc.frequency.value = 440;
